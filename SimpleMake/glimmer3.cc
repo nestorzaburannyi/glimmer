@@ -185,7 +185,6 @@ int  main
       detail_fp = File_Open (filename, "w", __FILE__, __LINE__);
 
       filename = Output_Tag;
-      filename . append (".predict");
       predict_fp = File_Open (filename, "w", __FILE__, __LINE__);
 
       sequence_fp = File_Open (Sequence_File_Name, "r", __FILE__, __LINE__);
@@ -231,7 +230,6 @@ int  main
          Fasta_Header = hdr_list [i] . c_str ();
          fprintf (detail_fp, "\n\n>%s\n", Fasta_Header);
          Echo_Specific_Settings (detail_fp, Sequence_Len);
-         fprintf (predict_fp, ">%s\n", Fasta_Header);
 
          if  (Orflist_File_Name != NULL)
             {
@@ -3510,7 +3508,8 @@ static void  Trace_Back
                   // off the back to indicate the gene could extend there
                }
           }
-      fprintf (fp, "orf%05d %8d %8d %+3d %8.2f\n",
+      fprintf (fp, "%s orf%05d %8d %8d %+3d %8.2f\n",
+           Fasta_Header,
            gene_list [i] . Get_ID (),  start, stop,
            gene_list [i] . Get_Frame (),
            100.0 * gene_list [i] . Get_Score () / gene_list [i] . Get_Gene_Len ());
